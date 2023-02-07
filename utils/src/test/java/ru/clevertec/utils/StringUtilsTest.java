@@ -1,4 +1,4 @@
-package ru.clevertec.receipt;
+package ru.clevertec.utils;
 
 import org.junit.jupiter.api.Test;
 

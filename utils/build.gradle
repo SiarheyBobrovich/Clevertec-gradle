@@ -1,12 +1,27 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
 }
 
-ext {
-    project.version = "1.3.5"
+group = 'ru.clevertec'
+version = '1.3.5'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -19,3 +34,5 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+build.dependsOn(publishToMavenLocal)
