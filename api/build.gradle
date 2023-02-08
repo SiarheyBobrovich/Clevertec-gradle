@@ -4,6 +4,7 @@ plugins {
 
 group = 'ru.clevertec'
 version = '0.1.0'
+mainClassName = "ru.clevertec.api.Main"
 
 java {
     toolchain {
@@ -21,26 +22,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'ru.clevertec.api.Main'
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-
-}
+apply from: 'jar_script.gradle'
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-task customFatJar(type: Jar) {
-    manifest {
-        attributes 'Main-Class': 'ru.clevertec.api.Main'
-    }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }
