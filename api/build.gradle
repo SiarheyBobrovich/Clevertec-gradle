@@ -23,7 +23,6 @@ dependencies {
 }
 
 apply from: 'jar_script.gradle'
-
 tasks.named('test') {
     useJUnitPlatform()
 }

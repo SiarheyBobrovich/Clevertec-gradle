@@ -34,4 +34,8 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-build.dependsOn(publishToMavenLocal)
+build {
+    dependsOn {
+        tasks.named("publishToMavenLocal")
+    }
+}
