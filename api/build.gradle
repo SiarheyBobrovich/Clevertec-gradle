@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+}
+
+group = 'ru.clevertec'
+version = '0.1.0'
+mainClassName = "ru.clevertec.api.Main"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+}
+
+apply from: 'jar_script.gradle'
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
