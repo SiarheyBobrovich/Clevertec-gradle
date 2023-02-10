@@ -1,6 +1,8 @@
-plugins {
-    id 'java'
-}
+//plugins {
+//    id 'java'
+//}
+
+plugins.apply 'java'
 
 group = 'ru.clevertec'
 version = '0.1.1'
@@ -23,4 +25,44 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+class TestReportPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+
+        project.tasks.register("deleteReportDir", Delete) {
+            doFirst {
+                delete "$project.rootDir/reports"
+            }
+        }
+
+        project.tasks.register('copyReports') {
+            dependsOn 'deleteReportDir'
+
+            onlyIf {
+                project.file("$project.buildDir").exists()
+            }
+            doFirst {
+                project.copy {
+                    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+                    from("$project.buildDir/reports")
+                    into("$project.rootDir/reports/reports")
+                }
+            }
+            doLast {
+                project.copy {
+                    from("$project.buildDir/test-results")
+                    into("$project.rootDir/reports/test-results")
+                }
+            }
+        }
+    }
+}
+
+plugins.apply TestReportPlugin.class
+
+test {
+    finalizedBy 'copyReports'
 }
