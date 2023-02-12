@@ -12,6 +12,12 @@ java {
     }
 }
 
+jar {
+    manifest {
+        attributes "Name":"utils", "Version": "1.3.5"
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
